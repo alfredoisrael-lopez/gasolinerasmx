@@ -15,11 +15,17 @@ var cfenv = require('cfenv');
 // create a new express server
 var app = express();
 
+var gasolineras = require('./routes/gasolineras');
+
 // serve the files out of ./public as our main files
 app.use(express.static(__dirname + '/public'));
 
 // get the app environment from Cloud Foundry
 var appEnv = cfenv.getAppEnv();
+
+app.get('/api/loc/Gasolineras', function(req, res) {
+	gasolineras.findGasolinerasAroundPoint(req, res);
+});
 
 // start server on the specified port and binding host
 app.listen(appEnv.port, '0.0.0.0', function() {
