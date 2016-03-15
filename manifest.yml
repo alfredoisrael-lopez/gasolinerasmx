@@ -6,5 +6,3 @@ applications:
   name: gasolinerasmx
   host: gasolinerasmx
   disk_quota: 1024M
-  services:
-  - MongoDB Compose Gasolineras MX
