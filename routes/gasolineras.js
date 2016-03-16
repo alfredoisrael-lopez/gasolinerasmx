@@ -9,13 +9,16 @@ exports.findGasolinerasAroundPoint = function(req, res) {
 	mongo.MongoClient.connect(composeUri,{}, function(err, conn){
 		console.log("Connection Error --> " + err);
 		var collection = conn.collection('Gasolineras');
-		collection.find({
+		collection.find({ $and: [{
 							location:{
 								$geoWithin:{
 									$centerSphere:[[parseFloat(req.query.lon), parseFloat(req.query.lat) ], 
 													parseFloat(req.query.radius) / 6378.1 ] 
 									} 
 							 } 
+					    },{
+					    	qualification: { $gte: parseInt(req.query.qualification)}
+					    }]
 					    },
 					    {},
 			function(err, cursor){
